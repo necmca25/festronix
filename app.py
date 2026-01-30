@@ -14,8 +14,9 @@ DB = 'festronix.db'
 SECRET_KEY = 'festronix-secret'
 UPLOAD_FOLDER = 'uploads'
 
-GMAIL_USER = 'necmca25@gmail.com'  # your email
-GMAIL_APP_PASSWORD = 'oyvg wvgb fyle hyxn'  # your app password
+GMAIL_USER = os.getenv('GMAIL_USER')
+GMAIL_APP_PASSWORD = os.getenv('GMAIL_APP_PASSWORD')
+
 
 ALLOWED_EXTENSIONS = {'png','jpg','jpeg','gif','bmp','pdf','ppt','pptx'}
 
@@ -288,5 +289,7 @@ Team FESTRONIX
         print(f"Email error: {e}")
 
 # ================= RUN =================
+# ================= RUN =================
 if __name__ == '__main__':
     app.run()
+
