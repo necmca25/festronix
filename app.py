@@ -291,6 +291,8 @@ Team FESTRONIX
 
     except Exception as e:
         print(f"Email error: {e}")
+print(f"GMAIL_USER: {GMAIL_USER}, GMAIL_APP_PASSWORD set? {'Yes' if GMAIL_APP_PASSWORD else 'No'}")
+
 
 
 # ================= RUN =================
