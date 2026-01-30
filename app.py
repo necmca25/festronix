@@ -251,6 +251,9 @@ def uploads(filename):
 # ================= EMAIL =================
 def send_email(to, name, event=None, team_members=None, regno=None):
     try:
+        print(f"DEBUG: Trying to send email to {to}")
+        print(f"DEBUG: GMAIL_USER={GMAIL_USER}, GMAIL_APP_PASSWORD length={len(GMAIL_APP_PASSWORD) if GMAIL_APP_PASSWORD else 'None'}")
+
         msg = EmailMessage()
         msg['Subject'] = f'FESTRONIX Registration Approved ✅'
         msg['From'] = GMAIL_USER
@@ -280,13 +283,15 @@ Team FESTRONIX
         """)
 
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as s:
+            print("DEBUG: Logging in to Gmail...")
             s.login(GMAIL_USER, GMAIL_APP_PASSWORD)
+            print("DEBUG: Sending message...")
             s.send_message(msg)
-
         print(f"Email sent successfully to {to}")
 
     except Exception as e:
         print(f"Email error: {e}")
+
 
 # ================= RUN =================
 # ================= RUN =================
