@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TECH TRIO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #12122a, #050510);
+      color: #fff;
+      min-height: 100vh;
+    }
+    body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(1px 1px at 10% 20%,#fff,transparent),
+    radial-gradient(1px 1px at 30% 80%,#fff,transparent),
+    radial-gradient(1px 1px at 70% 30%,#fff,transparent),
+    radial-gradient(1px 1px at 90% 60%,#fff,transparent);
+  background-size:200px 200px;
+  animation:stars 70s linear infinite;
+  opacity:.4;
+  z-index:-1; /* behind everything */
+}
+
+@keyframes stars{
+  from{background-position:0 0;}
+  to{background-position:-1200px 1200px;}
+}
+
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Header */
+    .header {
+      padding: 20px 40px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: #1e1e3f;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    /* Main Layout */
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px 40px 60px;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 40px;
+    }
+
+    /* Left Poster */
+    .poster {
+      background: linear-gradient(160deg, #3b3bff, #00b3ff);
+      border-radius: 18px;
+       position: relative;
+      padding: 20px;
+      height: 420px;
+      position: relative;
+      overflow: hidden;
+    }
+    .poster-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.55);
+  z-index: 0;
+}
+
+    .poster h3 {
+      background: #ff9f1c;
+      color: #000;
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .poster h1 {
+      font-size: 28px;
+      font-weight: 800;
+      margin-top: 230px;
+      line-height: 1.2;
+    }
+
+    .tag {
+      margin-top: 10px;
+      display: inline-block;
+      background: rgba(0,0,0,0.4);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+
+    /* Right Content */
+    .title {
+      font-size: 38px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .info-card {
+      background: linear-gradient(180deg, #141432, #0a0a1f);
+      padding: 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .info-card small {
+      opacity: 0.7;
+      font-size: 12px;
+    }
+
+    .info-card p {
+      margin-top: 6px;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section h2 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .section p {
+      font-size: 14px;
+      line-height: 1.7;
+      opacity: 0.85;
+    }
+
+    ul {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+
+    ul li {
+      margin-bottom: 8px;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    /* Register Box */
+    .register-box {
+      background: linear-gradient(90deg, #1a1a3d, #2a0f3a);
+      border-radius: 18px;
+      padding: 30px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .register-box h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .register-btn {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      font-size: 15px;
+      font-weight: 600;
+      background: linear-gradient(90deg, #ffb703, #ff006e);
+      cursor: pointer;
+    }
+
+    .register-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* Coordinator */
+    .coordinator {
+      margin-top: 30px;
+      background: #10102a;
+      padding: 18px;
+      border-radius: 14px;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    /* Responsive */
+    @media(max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      .poster {
+        height: 360px;
+      }
+
+      .poster h1 {
+        margin-top: 190px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+   <a href="{{ url_for('events_page') }}" class="back-btn">← Back</a>
+
+
+  </div>
+
+  <div class="container">
+
+    <!-- Left -->
+    <div class="poster">
+        <img src="{{ url_for('static', filename='images/event2.png') }}" alt="college" class="poster-img">
+      <h3>TECHNICAL</h3>
+      <h1>TECH<br>TRIO</h1>
+      <span class="tag">Technical Event</span>
+    </div>
+
+    <!-- Right -->
+    <div>
+      <h1 class="title">TECH TRIO</h1>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <small>DATE & TIME</small>
+          <p>13 FEB, 2026<br>09:00 AM</p>
+        </div>
+
+        <div class="info-card">
+          <small>VENUE</small>
+          <p>D Block – Lab 6</p>
+        </div>
+
+       
+
+        <div class="info-card">
+          <small>PARTICIPATION</small>
+          <p>Team Event<br>Max team size: 3</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>About the Event</h2>
+        <p>
+          Prompt Battle is a creative technical event where participants generate
+          quick, innovative prompts or ideas, showcasing imagination, speed,
+          and AI interaction skills.
+        </p>
+        <p>
+          Round 1: Quick Prompting<br>
+          Round 2: Idea Innovation<br>
+          Round 3: AI Response Challenge
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>Rules & Guidelines</h2>
+        <ul>
+          <li>Participants must submit prompts within the allotted time.</li>
+          <li>Prompts must be original and appropriate.</li>
+          <li>Judges’ decisions will be final.</li>
+        </ul>
+      </div>
+
+      <div class="register-box">
+        <h3>Ready to participate?</h3>
+         <a href="{{ url_for('register_page') }}" class="register-btn">Register</a>
+      </div>
+
+      <div class="coordinator">
+        <strong>Coordinator</strong><br>
+        GFYTV HFTF 9566887593
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function register() {
+      window.location.href = "register.html";
+    }
+  </script>
+
+</body>
+</html>

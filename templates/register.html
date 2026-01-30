@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FESTRONIX Registration</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #050b14, #0b1d3a);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      padding: 20px 0 40px;
+    }
+
+    .header h1 {
+      font-size: clamp(24px, 5vw, 42px);
+      color: #f5c26b;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: #7f7cff;
+      font-size: clamp(14px, 3vw, 18px);
+    }
+
+    .back-btn {
+      display: inline-block;
+      padding: 8px 20px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 25px;
+      color: #2ef2d3;
+      text-decoration: none;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(10, 25, 50, 0.8);
+      backdrop-filter: blur(10px);
+      padding: clamp(20px, 5vw, 40px);
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(100, 161, 255, 0.3);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #B8FCFE;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #2ef2d3;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .file-input-wrapper input[type=file] {
+      position: absolute;
+      left: -9999px;
+    }
+
+    .file-input-label {
+      display: block;
+      padding: 12px 15px;
+      background: rgba(46, 242, 211, 0.1);
+      border: 2px dashed #2ef2d3;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .file-input-label:hover {
+      background: rgba(46, 242, 211, 0.2);
+    }
+
+    .file-name {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #2ef2d3;
+    }
+
+    .participants-section {
+      margin-top: 15px;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+    }
+
+    .participant-input {
+      margin-bottom: 10px;
+    }
+
+    .qr-section {
+      text-align: center;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      margin: 30px 0;
+    }
+
+    .qr-section h3 {
+      color: #f5c26b;
+      margin-bottom: 15px;
+    }
+
+    .qr-section img {
+      max-width: 200px;
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #2ef2d3, #7f7cff);
+      border: none;
+      border-radius: 30px;
+      color: #000;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 20px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(46, 242, 211, 0.4);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .error-message {
+      color: #ff6b6b;
+      font-size: 12px;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .success-message {
+      background: rgba(46, 242, 211, 0.2);
+      border: 1px solid #2ef2d3;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .warning-message {
+      background: rgba(255, 107, 107, 0.2);
+      border: 1px solid #ff6b6b;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 20px;
+      display: none;
+      color: #ff6b6b;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        padding: 20px;
+      }
+
+      .qr-section {
+        padding: 20px;
+      }
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .spinner {
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-top: 3px solid #2ef2d3;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .team-member-label {
+      color: #f5c26b;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a href="{{ url_for('index') }}" class="back-btn">← Back to Home</a>
+
+    <h1>FESTRONIX '26 Registration</h1>
+    <p>Fill in your details to register for the event</p>
+  </div>
+
+  <div class="container">
+    <div class="success-message" id="successMessage">
+      ✅ Registration submitted successfully! We'll contact you soon.
+    </div>
+
+    <div class="warning-message" id="warningMessage">
+      ⚠️ You have already registered! Each person can only register once.
+    </div>
+
+    <form id="registrationForm" enctype="multipart/form-data">
+      <!-- Personal Details -->
+      <h3 style="color: #f5c26b; margin-bottom: 20px;">Personal Details</h3>
+      
+      <div class="form-group">
+        <label for="name">Full Name *</label>
+        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+        <div class="error-message" id="nameError">Please enter your name</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="form-group">
+          <label for="regno">Register Number *</label>
+          <input type="text" id="regno" name="regno" required placeholder="e.g., 21CS001">
+        </div>
+
+        <div class="form-group">
+          <label for="mobile">Mobile Number *</label>
+          <input type="tel" id="mobile" name="mobile" required placeholder="10-digit mobile number" pattern="[0-9]{10}">
+          <div class="error-message" id="mobileError">Enter valid 10-digit number</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+        <div class="error-message" id="emailError">Enter valid email address</div>
+      </div>
+
+      <div class="form-group">
+        <label for="college">College Name *</label>
+        <input type="text" id="college" name="college" required placeholder="Enter your college name">
+      </div>
+
+      <div class="grid-2">
+        <div class="form-group">
+          <label for="dept">Department *</label>
+          <input type="text" id="dept" name="dept" required placeholder="e.g., CSE, ECE, MECH">
+        </div>
+
+        <div class="form-group">
+          <label for="year">Year *</label>
+          <select id="year" name="year" required>
+            <option value="">Select Year</option>
+            <option value="1">1st Year</option>
+            <option value="2">2nd Year</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Event Selection -->
+      <h3 style="color: #f5c26b; margin: 30px 0 20px;">Event Selection</h3>
+
+      <div class="form-group">
+        <label for="techEvent">Technical Event *</label>
+        <select id="techEvent" name="techEvent">
+          <option value="">-- Select Technical Event --</option>
+          <option value="CODE RELAY">CODE RELAY (4 Members)</option>
+          <option value="TECH TRIO">TECH TRIO (2 Members)</option>
+          <option value="PAPER PRESENTATION">PAPER PRESENTATION (3 Members)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="nonTechEvent">Non-Technical Event *</label>
+        <select id="nonTechEvent" name="nonTechEvent">
+          <option value="">-- Select Non-Technical Event --</option>
+          <option value="ADZAP">ADZAP (2 Members)</option>
+          <option value="FACE PAINTING">FACE PAINTING (2 Members)</option>
+        </select>
+      </div>
+
+      <!-- Team Members Section -->
+      <div class="participants-section" id="participantsSection" style="display: none;">
+        <h4 style="color: #f5c26b; margin-bottom: 15px;">Team Members</h4>
+        <div id="participantInputs"></div>
+      </div>
+
+      <!-- File Uploads -->
+      <h3 style="color: #f5c26b; margin: 30px 0 20px;">File Uploads</h3>
+
+      <div class="form-group">
+        <label>PPT/PDF Upload (Optional - for Paper Presentation)</label>
+        <div class="file-input-wrapper">
+          <input type="file" id="pptFile" name="pptFile" accept=".ppt,.pptx,.pdf">
+          <label for="pptFile" class="file-input-label">
+            📄 Click to upload PPT/PDF
+          </label>
+        </div>
+        <div class="file-name" id="pptFileName"></div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        Submit Registration
+      </button>
+
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p style="margin-top: 10px;">Submitting your registration...</p>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const techEvent = document.getElementById('techEvent');
+    const nonTechEvent = document.getElementById('nonTechEvent');
+    const participantsSection = document.getElementById('participantsSection');
+    const participantInputs = document.getElementById('participantInputs');
+    const form = document.getElementById('registrationForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const loading = document.getElementById('loading');
+    const successMessage = document.getElementById('successMessage');
+    const warningMessage = document.getElementById('warningMessage');
+
+    // Event participant mapping
+    const participantMapping = {
+      "CODE RELAY": 4,
+      "TECH TRIO": 2,
+      "PAPER PRESENTATION": 3,
+      "ADZAP": 2,
+      "FACE PAINTING": 2
+    };
+
+    // File name display
+    document.getElementById('pptFile').addEventListener('change', function(e) {
+      const fileName = e.target.files[0]?.name || '';
+      document.getElementById('pptFileName').textContent = fileName ? `Selected: ${fileName}` : '';
+    });
+
+    // Check if user has already registered (using localStorage)
+    function checkIfAlreadyRegistered() {
+      const regno = document.getElementById('regno').value.trim();
+      const email = document.getElementById('email').value.trim();
+      
+      if (!regno || !email) return false;
+      
+      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+      
+      return registeredUsers.some(user => 
+        user.regno === regno || user.email === email
+      );
+    }
+
+    // Save registered user to localStorage
+    function saveRegisteredUser() {
+      const regno = document.getElementById('regno').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const name = document.getElementById('name').value.trim();
+      
+      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+      registeredUsers.push({ regno, email, name, timestamp: new Date().toISOString() });
+      localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+    }
+
+    // Update participant inputs based on selected event
+    function updateParticipantInputsByEvent() {
+      const selectedEvent = techEvent.value || nonTechEvent.value;
+      const count = participantMapping[selectedEvent] || 0;
+
+      participantInputs.innerHTML = '';
+      
+      if (count > 1) {
+        participantsSection.style.display = 'block';
+        
+        // Create input fields for team members (excluding the main registrant)
+        for (let i = 2; i <= count; i++) {
+          const wrapper = document.createElement('div');
+          wrapper.className = 'form-group';
+          
+          const label = document.createElement('label');
+          label.className = 'team-member-label';
+          label.textContent = `Team Member ${i} Name *`;
+          
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.name = `participant${i}`;
+          input.placeholder = `Enter team member ${i} full name`;
+          input.required = true;
+          input.className = 'participant-input';
+          
+          wrapper.appendChild(label);
+          wrapper.appendChild(input);
+          participantInputs.appendChild(wrapper);
+        }
+      } else {
+        participantsSection.style.display = 'none';
+      }
+    }
+
+    // Clear the other event when one is selected
+    techEvent.addEventListener('change', () => {
+      if (techEvent.value) {
+        nonTechEvent.value = '';
+      }
+      updateParticipantInputsByEvent();
+    });
+
+    nonTechEvent.addEventListener('change', () => {
+      if (nonTechEvent.value) {
+        techEvent.value = '';
+      }
+      updateParticipantInputsByEvent();
+    });
+
+    // Form validation
+    function validateForm() {
+      let isValid = true;
+      
+      // Mobile validation
+      const mobile = document.getElementById('mobile').value;
+      if (!/^[0-9]{10}$/.test(mobile)) {
+        document.getElementById('mobileError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('mobileError').style.display = 'none';
+      }
+      
+      // Email validation
+      const email = document.getElementById('email').value;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('emailError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('emailError').style.display = 'none';
+      }
+      
+      // Event selection validation
+      if (!techEvent.value && !nonTechEvent.value) {
+        alert('Please select at least one event (Technical or Non-Technical)');
+        isValid = false;
+      }
+      
+      // Check for duplicate registration
+      if (checkIfAlreadyRegistered()) {
+        warningMessage.style.display = 'block';
+        warningMessage.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+          warningMessage.style.display = 'none';
+        }, 5000);
+        isValid = false;
+      }
+      
+      return isValid;
+    }
+
+    // Form submission
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      if (!validateForm()) {
+        return;
+      }
+      
+      const formData = new FormData(form);
+      
+      // Add selected event
+      const selectedEvent = techEvent.value || nonTechEvent.value;
+      formData.append('event', selectedEvent);
+      
+      // Add team members
+      const count = participantMapping[selectedEvent] || 1;
+      const teamMembers = [document.getElementById('name').value];
+      
+      for (let i = 2; i <= count; i++) {
+        const memberName = document.querySelector(`input[name="participant${i}"]`)?.value;
+        if (memberName) {
+          teamMembers.push(memberName);
+        }
+      }
+      formData.append('teamMembers', JSON.stringify(teamMembers));
+      formData.append('participantCount', count);
+      
+      // Show loading
+      submitBtn.disabled = true;
+      loading.style.display = 'block';
+      
+      try {
+        const response = await fetch('http://127.0.0.1:5000/api/register', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+          // Save to localStorage to prevent duplicate registration
+          saveRegisteredUser();
+          
+          successMessage.style.display = 'block';
+          form.reset();
+          participantsSection.style.display = 'none';
+          document.getElementById('pptFileName').textContent = '';
+          
+          // Scroll to success message
+          successMessage.scrollIntoView({ behavior: 'smooth' });
+          
+          // Hide success message after 5 seconds
+          setTimeout(() => {
+            successMessage.style.display = 'none';
+          }, 5000);
+        } else {
+          alert('Error: ' + result.error);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to submit registration. Please check if the server is running.');
+      } finally {
+        submitBtn.disabled = false;
+        loading.style.display = 'none';
+      }
+    });
+
+    // Initialize on page load
+    updateParticipantInputsByEvent();
+    form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  loading.style.display = "block";
+  submitBtn.disabled = true;
+
+  const formData = new FormData(form);
+
+  try {
+    const res = await fetch("http://localhost:5000/api/register", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await res.json();
+
+    loading.style.display = "none";
+    submitBtn.disabled = false;
+
+    if (res.ok) {
+      successMessage.style.display = "block";
+      form.reset();
+    } else {
+      alert(data.error || "Registration failed");
+    }
+
+  } catch (err) {
+    loading.style.display = "none";
+    submitBtn.disabled = false;
+    alert("Server not reachable");
+  }
+});
+  </script>
+</body>
+</html>

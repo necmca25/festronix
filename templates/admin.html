@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FESTRONIX Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+* {margin:0;padding:0;box-sizing:border-box;}
+body {background:linear-gradient(135deg,#050b14,#0b1d3a); color:#fff; font-family:'Poppins',sans-serif; min-height:100vh; padding:20px;}
+h1,h2,h3,h4{margin:0;}
+button{cursor:pointer;}
+
+/* LOGIN */
+#loginBox{max-width:400px;margin:50px auto;background:rgba(10,25,50,0.8);padding:30px;border-radius:15px;text-align:center;}
+#loginBox input{width:100%;padding:10px;margin:10px 0;border-radius:8px;border:none;background:rgba(0,0,0,0.4);color:#fff;}
+#loginBox button{width:100%;padding:10px;border:none;border-radius:8px;background:#2ef2d3;font-weight:600;color:#000;}
+
+/* DASHBOARD */
+#dashboard{display:none;}
+.header{text-align:center;padding:20px 0 40px;}
+.header h1{font-size:clamp(24px,5vw,42px);color:#f5c26b;margin-bottom:10px;}
+
+.filters{max-width:1400px;margin:0 auto 20px;background:rgba(10,25,50,0.8);padding:20px;border-radius:15px;display:flex;flex-wrap:wrap;gap:15px;align-items:center;}
+.filters label{color:#B8FCFE;font-size:14px;margin-right:5px;}
+.filters select,.filters input{padding:8px 12px;background:rgba(0,0,0,0.4);border-radius:8px;color:#fff;border:1px solid rgba(255,255,255,0.1);}
+.filters button{padding:8px 20px;background:linear-gradient(135deg,#2ef2d3,#7f7cff);border:none;border-radius:20px;color:#000;font-weight:600;}
+
+.container{max-width:1400px;margin:0 auto;background:rgba(10,25,50,0.8);padding:20px;border-radius:20px;overflow-x:auto;}
+table{width:100%;border-collapse:collapse;min-width:900px;}
+th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,0.1);text-align:left;}
+th{background:rgba(46,242,211,0.1);color:#2ef2d3;position:sticky;top:0;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginBox">
+  <h2>Admin Login</h2>
+  <input type="text" id="adminUser" placeholder="Username">
+  <input type="password" id="adminPass" placeholder="Password">
+  <button onclick="login()">Login</button>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+
+  <div class="header">
+    <h1>Admin Dashboard</h1>
+    <p style="color:#7f7cff;">View FESTRONIX '26 Registrations</p>
+  </div>
+
+  <div class="filters">
+    <select id="filterEvent">
+      <option value="">All Events</option>
+      <option value="CODE RELAY">CODE RELAY</option>
+      <option value="TECH TRIO">TECH TRIO</option>
+      <option value="PAPER PRESENTATION">PAPER PRESENTATION</option>
+      <option value="ADZAP">ADZAP</option>
+      <option value="FACE PAINTING">FACE PAINTING</option>
+    </select>
+
+    <input type="text" id="searchInput" placeholder="Search name/email/mobile">
+    <button onclick="applyFilters()">Apply</button>
+    <button onclick="downloadCSV()">Download CSV</button>
+  </div>
+
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th><th>Name</th><th>Email</th><th>Mobile</th>
+          <th>College</th><th>Event</th><th>Team Members</th><th>PPT</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+let allRegistrations = [];
+
+// ====== LOGIN ======
+async function login() {
+  const username = document.getElementById('adminUser').value;
+  const password = document.getElementById('adminPass').value;
+
+  const res = await fetch('http://127.0.0.1:5000/api/admin/login', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ username, password })
+  });
+
+  const data = await res.json();
+
+  if(res.ok){
+    localStorage.setItem('token', data.token);
+    document.getElementById('loginBox').style.display='none';
+    document.getElementById('dashboard').style.display='block';
+    loadRegistrations();
+  } else {
+    alert(data.error || 'Login failed');
+  }
+}
+
+// ====== LOAD REGISTRATIONS ======
+async function loadRegistrations() {
+  const token = localStorage.getItem('token');
+  if(!token){
+    alert('Token missing. Please login again.');
+    return;
+  }
+
+  const res = await fetch('http://127.0.0.1:5000/api/registrations', {
+    headers:{ Authorization: token }
+  });
+
+  allRegistrations = await res.json();
+  displayRegistrations(allRegistrations);
+}
+
+// ====== DISPLAY ======
+function displayRegistrations(list){
+  const tableBody = document.getElementById('tableBody');
+  tableBody.innerHTML = '';
+
+  list.forEach(r=>{
+    const team = r.team_members ? JSON.parse(r.team_members).join(', ') : 'Solo';
+    const ppt = r.ppt_file
+      ? `<a href="/uploads/${r.ppt_file}" target="_blank">View</a>`
+      : '-';
+
+    tableBody.innerHTML += `
+      <tr>
+        <td>${r.id}</td>
+        <td>${r.name}</td>
+        <td>${r.email}</td>
+        <td>${r.mobile}</td>
+        <td>${r.college}</td>
+        <td>${r.event}</td>
+        <td>${team}</td>
+        <td>${ppt}</td>
+      </tr>
+    `;
+  });
+}
+
+// ====== FILTER ======
+function applyFilters(){
+  const eventFilter = document.getElementById('filterEvent').value.toLowerCase();
+  const search = document.getElementById('searchInput').value.toLowerCase();
+
+  const filtered = allRegistrations.filter(r=>{
+    return (!eventFilter || r.event.toLowerCase()===eventFilter) &&
+           (!search ||
+            r.name.toLowerCase().includes(search) ||
+            r.email.toLowerCase().includes(search) ||
+            r.mobile.toLowerCase().includes(search));
+  });
+
+  displayRegistrations(filtered);
+}
+
+// ====== CSV ======
+function downloadCSV(){
+  let csv = 'ID,Name,Email,Mobile,College,Event,Team Members,PPT\n';
+
+  allRegistrations.forEach(r=>{
+    const team = r.team_members ? JSON.parse(r.team_members).join(' | ') : 'Solo';
+    csv += `${r.id},${r.name},${r.email},${r.mobile},${r.college},${r.event},"${team}",${r.ppt_file||''}\n`;
+  });
+
+  const blob = new Blob([csv], {type:'text/csv'});
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'registrations.csv';
+  link.click();
+}
+</script>
+
+</body>
+</html>

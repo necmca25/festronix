@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FESTRONIX '26</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:#050b14;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* ===== MOVING STARS ===== */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(1px 1px at 10% 20%,#fff,transparent),
+    radial-gradient(1px 1px at 30% 80%,#fff,transparent),
+    radial-gradient(1px 1px at 70% 30%,#fff,transparent),
+    radial-gradient(1px 1px at 90% 60%,#fff,transparent);
+  background-size:200px 200px;
+  animation:stars 70s linear infinite;
+  opacity:.4;
+  z-index:-1;
+}
+@keyframes stars{
+  from{background-position:0 0;}
+  to{background-position:-1200px 1200px;}
+}
+
+/* ===== BOOM / POP ===== */
+.pop{animation:pop .6s ease forwards;}
+.delay{animation-delay:.2s;}
+.delay2{animation-delay:.4s;}
+@keyframes pop{
+  from{transform:scale(.92);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
+
+/* ===== NAVBAR ===== */
+.navbar{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  align-items:center;
+  padding:18px 40px;
+}
+
+.logo-text{
+  color:#2ef2d3;
+  font-weight:700;
+  font-size:28px; /* BIG */
+  line-height:1.2;
+}
+.logo-text small{
+  font-size:17px;
+  color:#a1a1a1;
+}
+
+.nav-menu{
+  list-style:none;
+  display:flex;
+  justify-content:center;
+  gap:80px;
+  padding:0;
+  margin:0;
+}
+.nav-menu a{
+  text-decoration:none;
+  color:#cfcfcf;
+  font-size:16px; /* BIG */
+  font-weight:500;
+}
+.nav-menu a:hover{color:#2ef2d3;}
+/* Mobile Menu Toggle */
+.menu-toggle{
+  display:none;
+  flex-direction:column;
+  cursor:pointer;
+  gap:5px;
+}
+.menu-toggle span{
+  width:25px;
+  height:3px;
+  background:#2ef2d3;
+  border-radius:2px;
+  transition:all 0.3s ease;
+}
+
+/* ===== MAIN ===== */
+.main{
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:30px;
+  padding:30px 20px;
+}
+
+.nav-menu a:hover{
+  color:#2ef2d3;
+  text-shadow:0 0 10px rgba(46,242,211,0.6);
+}
+.nav-menu a:hover::after{
+  width:100%;
+}
+.nav-menu a::after{
+  content:'';
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:0;
+  height:2px;
+  background:linear-gradient(90deg,#2ef2d3,#7f7cff);
+  transition:width 0.3s ease;
+}
+
+.left-col,.right-col{
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+  align-items:center;
+}
+
+/* ===== GLASS CARD ===== */
+.glass-card{
+  width:320px;
+  max-width:100%;
+  padding:22px;
+  border-radius:18px;
+  background:rgba(10,25,50,.6);
+  box-shadow:0 0 30px rgba(100,161,255,.35);
+  backdrop-filter:blur(10px);
+  text-align:center;
+}
+
+.card-title{color:#B8FCFE;font-size:13px;}
+.big{font-size:44px;margin:10px 0;}
+.month{color:#cfcfcf;}
+.year{color:#9a9a9a;}
+
+/* ===== COUNTDOWN ===== */
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.countdown div{
+  width:65px;
+  padding:10px 5px;
+  background:#0b0f14;
+  border-radius:12px;
+}
+.countdown span{
+  font-size:22px;
+  color:#2ef2d3;
+}
+.countdown small{
+  font-size:10px;
+  color:#a0a0a0;
+}
+
+/* ===== CENTER ===== */
+.center-logo{text-align:center;}
+.utsava{
+  font-size:clamp(40px,8vw,70px);
+  color:#f5c26b;
+  letter-spacing:2px;
+}
+
+/* ===== BUTTON ===== */
+.main-btn{
+  width:320px;
+  max-width:100%;
+  padding:16px 24px;
+  border-radius:14px;
+  border:none;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  background:linear-gradient(135deg,#2ef2d3,#7f7cff);
+  color:#000;
+  transition:all 0.3s ease;
+  box-shadow:0 5px 20px rgba(46,242,211,0.3);
+  position:relative;
+  overflow:hidden;
+}
+
+.main-btn::before{
+  content:'';
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:0;
+  height:0;
+  border-radius:50%;
+  background:rgba(255,255,255,0.3);
+  transform:translate(-50%,-50%);
+  transition:width 0.6s,height 0.6s;
+}
+
+.main-btn:hover::before{
+  width:300px;
+  height:300px;
+}
+
+.main-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 30px rgba(46,242,211,0.5);
+}
+
+.main-btn.outline{
+  background:transparent;
+  color:#2ef2d3;
+  border:2px solid #2ef2d3;
+  box-shadow:0 5px 20px rgba(46,242,211,0.2);
+}
+
+.main-btn.outline:hover{
+  background:rgba(46,242,211,0.1);
+  border-color:#7f7cff;
+  color:#7f7cff;
+  box-shadow:0 8px 30px rgba(127,124,255,0.4);
+}
+.glass-card::before{
+  content:'';
+  position:absolute;
+  top:-50%;
+  left:-50%;
+  width:200%;
+  height:200%;
+  background:radial-gradient(circle,rgba(46,242,211,0.1) 0%,transparent 50%);
+  opacity:0;
+  transition:opacity 0.1s ease;
+}
+
+.glass-card:hover{
+  transform:translateY(-10px) scale(1.02);
+  box-shadow:
+    0 15px 50px 0 rgba(46,242,211,0.4),
+    0 0 80px rgba(127,124,255,0.3),
+    inset 0 0 30px rgba(255,255,255,0.1);
+  border-color:rgba(46,242,211,0.5);
+}
+
+.glass-card:hover::before{
+  opacity:1;
+}
+
+/* ===== TAGLINE ===== */
+.tagline{
+  text-align:center;
+  font-size:clamp(20px,4vw,28px);
+  color:#7f7cff;
+  margin:40px 0;
+}
+
+/* ===== ABOUT ===== */
+/* ===== ABOUT SECTIONS ===== */
+#hero,#about,#about-festonix{
+  padding:60px 5%;
+}
+.hero-container,.about-container{
+  display:flex;
+  gap:40px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.hero-about,.about-text{
+  flex:1;
+  min-width:280px;
+  background:rgba(10,25,50,0.7);
+  border:1px solid rgba(46,242,211,0.2);
+  padding:35px;
+  border-radius:20px;
+  backdrop-filter:blur(10px);
+  transition:all 0.3s ease;
+}
+.hero-about:hover,.about-text:hover{
+  box-shadow:0 10px 40px rgba(46,242,211,0.3);
+  transform:translateY(-5px);
+}
+.hero-about h2,.about-text h2{
+  color:#00e5ff;
+  font-size:clamp(24px,5vw,32px);
+  margin-bottom:20px;
+}
+.hero-about p,.about-text p{
+  font-size:15px;
+  line-height:1.8;
+  color:#cfcfcf;
+}
+.about-image{
+  flex:1;
+  min-width:280px;
+}
+.about-image img{
+  width:100%;
+  border-radius:20px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.5);
+  transition:transform 0.3s ease;
+}
+.about-image img:hover{
+  transform:scale(1.02);
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .main{flex-direction:column;}
+  .left-col,.right-col{width:100%;}
+  .navbar{grid-template-columns:1fr;}
+  .nav-menu{flex-wrap:wrap;}
+}
+/* ===== RESPONSIVE DESIGN ===== */
+@media(max-width:1024px){
+  .main{
+    gap:30px;
+    padding:30px 4%;
+  }
+  .glass-card{
+    width:280px;
+  }
+  .main-btn{
+    width:280px;
+  }
+}
+
+@media(max-width:768px){
+  .navbar{
+    padding:15px 4%;
+    flex-wrap:wrap;
+    gap:15px;
+  }
+  
+  .menu-toggle{
+    display:flex;
+    order:2;
+  }
+  
+  .logo-text{
+    order:1;
+    font-size:20px;
+  }
+  
+  .nav-menu{
+    order:3;
+    width:100%;
+    flex-direction:column;
+    gap:15px;
+    text-align:center;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.3s ease;
+  }
+  
+  .nav-menu.active{
+    max-height:300px;
+    padding-top:15px;
+  }
+  
+  .main{
+    flex-direction:column;
+    padding:25px 4%;
+  }
+  
+  .glass-card{
+    width:100%;
+    max-width:350px;
+  }
+  
+  .main-btn{
+    width:100%;
+    max-width:350px;
+  }
+  
+  .countdown{
+    gap:8px;
+  }
+  
+  .countdown div{
+    width:60px;
+    padding:10px 6px;
+  }
+  
+  #hero,#about,#about-festonix{
+    padding:40px 4%;
+  }
+}
+
+@media(max-width:480px){
+  .logo-text{
+    font-size:18px;
+  }
+  
+  .logo-text small{
+    font-size:11px;
+  }
+  
+  .utsava{
+    font-size:36px;
+  }
+  
+  .glass-card{
+    padding:20px;
+  }
+  
+  .big{
+    font-size:40px;
+  }
+  
+  .countdown div{
+    width:55px;
+  }
+  
+  .countdown span{
+    font-size:20px;
+  }
+  
+  .hero-about,.about-text{
+    padding:25px;
+  }
+}
+
+@media(max-width:360px){
+  .navbar{
+    padding:12px 3%;
+  }
+  
+  .logo-text{
+    font-size:16px;
+  }
+  
+  .countdown{
+    gap:6px;
+  }
+  
+  .countdown div{
+    width:50px;
+    padding:8px 4px;
+  }
+  
+  .countdown span{
+    font-size:18px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <span class="logo-text">NANDHA<br><small>ENGINEERING COLLEGE</small></span>
+
+  <ul class="nav-menu">
+  <li><a href="/">Home</a></li>
+  <li><a href="/events">Events</a></li>
+  <li><a href="#about">About</a></li>
+  <li><a href="/register">Register</a></li>
+</ul>
+
+</header>
+
+<section class="main">
+
+  <div class="left-col">
+    <div class="glass-card pop">
+      <p class="card-title">EVENT DATE</p>
+      <h1 class="big">13</h1>
+      <p class="month">FEBRUARY</p>
+      <p class="year">2026</p>
+    </div>
+
+    <div class="glass-card pop delay">
+      <p class="card-title">EVENT REGISTRATION CLOSES IN ⏳</p>
+      <div class="countdown">
+        <div><span id="days">00</span><small>DAYS</small></div>
+        <div><span id="hours">00</span><small>HRS</small></div>
+        <div><span id="minutes">00</span><small>MIN</small></div>
+        <div><span id="seconds">00</span><small>SEC</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="center-logo">
+    <h1 class="utsava">FESTRONIX '26</h1>
+  </div>
+
+  <div class="right-col">
+    <div class="glass-card pop delay2">
+      <p class="card-title">VENUE</p>
+      <p><b>Nandha Engineering College</b></p>
+      <p>ERODE, Tamil Nadu</p>
+    </div>
+
+    <button class="main-btn" onclick="goRegister()">REGISTER NOW ✍️</button>
+    <button class="main-btn outline" onclick="goExplore()">EXPLORE EVENTS</button>
+  </div>
+
+</section>
+
+<p class="tagline">ABOUT</p>
+
+<section id="about">
+  <div class="hero-container">
+    <div class="hero-about">
+      <h2>ABOUT NANDHA<br>ENGINEERING COLLEGE</h2>
+       <p>
+        Established in 2001, Nandha Engineering College, which started with 3 branches, 
+        is in its 25th year of service to the student community. It remains the flagship 
+        brand of Nandha Educational Institutions and is recognized as one of the best 
+        engineering colleges in the state of Tamil Nadu.
+      </p>
+
+      <p>
+        Nandha Engineering College, under the guidance of the illustrious Chairman 
+        Thiru. V. Shanmugan and Secretaries Thiru. S. Nandhakumar Pradeep and Thiru S. Thirumoorthy, 
+        with foresight and far-reaching vision, is at the forefront of innovation in technical 
+        and management education.
+      </p>
+
+      <p>
+        The college, as of now, is functioning with 3000 students belonging to 12 Engineering 
+        and Technology departments, Computer Applications, Management Studies, Basic Science and 
+        Humanities Department. Nandha Engineering College excels as one of the Top Engineering 
+        Colleges in Erode.
+      </p>
+    </div>
+    <div class="about-image">
+      <img src="{{ url_for('static', filename='images/college.jpeg') }}" alt="college">
+
+
+    </div>
+  </div>
+</section>
+
+<section id="about-festonix">
+  <div class="about-container">
+    <div class="about-image">
+      <img src="{{ url_for('static', filename='images/fes.png') }}" alt="college">
+    </div>
+    <div class="about-text">
+      <h2>About Festonix</h2>
+       <p>
+        Festonix is the flagship technical and cultural symposium of
+        Nandha Engineering College, bringing together innovation,
+        creativity, and youthful energy on one dynamic platform.
+      </p>
+
+      <p>
+        The fest features a wide range of technical events, workshops,
+        cultural performances, and competitions that encourage students
+        to explore technology beyond classrooms.
+      </p>
+
+      <p>
+        Festonix fosters teamwork, leadership, and technical excellence
+        while providing an unforgettable experience filled with learning,
+        fun, and celebration.
+      </p>
+      
+    </div>
+  </div>
+</section>
+
+<script>
+const endDate=new Date("2026-02-30").getTime();
+setInterval(()=>{
+  const d=endDate-Date.now();
+  if(d<=0)return;
+  days.innerText=Math.floor(d/86400000);
+  hours.innerText=Math.floor(d/3600000)%24;
+  minutes.innerText=Math.floor(d/60000)%60;
+  seconds.innerText=Math.floor(d/1000)%60;
+},1000);
+
+function goRegister(){location.href="/register";}
+function goExplore(){location.href="/events";}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<section id="explore-events">
+
+  <!-- MENU BAR -->
+  <div class="event-menu">
+    <button class="menu-btn active" data-type="all">All Events</button>
+    <button class="menu-btn" data-type="tech">Tech Events</button>
+    <button class="menu-btn" data-type="nontech">Non-Tech Events</button>
+  </div>
+
+  <!-- EVENTS -->
+  <div class="events-container">
+
+  <!-- CODE RELAY -->
+  <div class="event-card tech event-image-card">
+    <div class="event-img">
+      <img src="{{ url_for('static', filename='images/event1.png') }}" alt="college">
+    </div>
+    <div class="event-content">
+      <span class="event-tag">TECH EVENT</span>
+      <h3>CODE RELAY</h3>
+      <p>Team-based relay coding challenge with time limits.</p>
+      <a href="/event/code-relay" class="view-btn">VIEW DETAILS →</a>
+    </div>
+  </div>
+
+  <!-- TECH TRIO -->
+  <div class="event-card tech event-image-card">
+    <div class="event-img">
+      <img src="{{ url_for('static', filename='images/event2.png') }}" alt="college">
+    </div>
+    <div class="event-content">
+      <span class="event-tag">TECH EVENT</span>
+      <h3>TECH TRIO</h3>
+      <p>Three-member technical challenge testing logic & speed.</p>
+      <a href="/event/tech-trio" class="view-btn">VIEW DETAILS →</a>
+    </div>
+  </div>
+
+  <!-- PAPER PRESENTATION -->
+  <div class="event-card tech event-image-card">
+    <div class="event-img">
+      <img src="{{ url_for('static', filename='images/event3.png') }}" alt="college">
+    </div>
+    <div class="event-content">
+      <span class="event-tag">TECH EVENT</span>
+      <h3>PAPER PRESENTATION</h3>
+      <p>Present innovative ideas and research to experts.</p>
+      <a href="/event/pp" class="view-btn">VIEW DETAILS →</a>
+    </div>
+  </div>
+
+  <!-- ADZAP -->
+  <div class="event-card nontech event-image-card">
+    <div class="event-img">
+      <img src="{{ url_for('static', filename='images/event5.png') }}" alt="college">
+    </div>
+    <div class="event-content">
+      <span class="event-tag">NON-TECH EVENT</span>
+      <h3>ADZAP</h3>
+      <p>Creative advertisement challenge with fun twists.</p>
+      <a href="/event/adzap" class="view-btn">VIEW DETAILS →</a>
+    </div>
+  </div>
+
+  <!-- FACE PAINTING -->
+  <div class="event-card nontech event-image-card">
+    <div class="event-img">
+      <img src="{{ url_for('static', filename='images/event4.png') }}" alt="college">
+    </div>
+    <div class="event-content">
+      <span class="event-tag">NON-TECH EVENT</span>
+      <h3>FACE PAINTING</h3>
+      <p>Showcase creativity through expressive face art.</p>
+      <a href="/event/fp" class="view-btn">VIEW DETAILS →</a>
+    </div>
+  </div>
+
+</div>
+
+
+  </div>
+</section>
+
+<style>
+  /* Stars for #explore-events section */
+#explore-events {
+  position: relative; /* required for absolute positioning */
+  overflow: hidden;
+}
+
+#explore-events::before {
+  content:"";
+  position: absolute;
+  inset:0;
+  background:
+    radial-gradient(1px 1px at 10% 20%,#fff,transparent),
+    radial-gradient(1px 1px at 30% 80%,#fff,transparent),
+    radial-gradient(1px 1px at 70% 30%,#fff,transparent),
+    radial-gradient(1px 1px at 90% 60%,#fff,transparent);
+  background-size:200px 200px;
+  animation: stars 70s linear infinite;
+  opacity:.4;
+  z-index:0; /* behind content */
+}
+
+/* Make content appear above stars */
+.events-container,
+.event-menu {
+  position: relative;
+  z-index: 1;
+}
+
+/* Keyframes same as before */
+@keyframes stars{
+  from{background-position:0 0;}
+  to{background-position:-1200px 1200px;}
+}
+
+    #explore-events {
+  min-height: 100vh;
+  padding: 60px 8%;
+  background: linear-gradient(135deg, #050b14, #0b1d3a, #1a0033);
+}
+
+/* MENU BAR */
+.event-menu {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.menu-btn {
+  padding: 10px 24px;
+  border-radius: 30px;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.menu-btn.active {
+  background: linear-gradient(135deg, #ffcc70, #ff6fcf);
+  color: black;
+}
+
+/* EVENTS GRID */
+.events-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+.event-card {
+  background: rgba(0,0,0,0.6);
+  border-radius: 20px;
+  padding: 40px 25px;
+  color: white;
+  box-shadow: 0 0 25px rgba(0,255,255,0.12);
+  transition: transform 0.3s;
+}
+
+.event-card:hover {
+  transform: translateY(-10px);
+}
+.event-image-card {
+  padding: 0;
+  overflow: hidden;
+  background: #050b14;
+}
+
+.event-img img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+
+.event-content {
+  padding: 25px;
+}
+
+.event-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #ffcc70, #ff6fcf);
+  color: black;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.event-content h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.event-content p {
+  font-size: 14px;
+  color: #cfd8ff;
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+.view-btn{
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 22px;
+  border-radius: 25px;
+  background: linear-gradient(135deg,#ffcc70,#ff6fcf);
+  color: black;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.view-btn:hover{
+  transform: scale(1.05);
+}
+
+
+
+</style>
+
+    <script>
+const buttons = document.querySelectorAll('.menu-btn');
+const events = document.querySelectorAll('.event-card');
+
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const type = btn.dataset.type;
+
+    events.forEach(event => {
+      if (type === "all") {
+        event.style.display = "block";
+      } else if (event.classList.contains(type)) {
+        event.style.display = "block";
+      } else {
+        event.style.display = "none";
+      }
+    });
+
+  });
+});
+</script>
+
+
